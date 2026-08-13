@@ -26,93 +26,83 @@ The project demonstrates the full workflow from raw customer data and model trai
 
 TRAINING
 
-
-
 Telco Customer Dataset
 
-&#x20;       |
+|
 
-&#x20;       v
+v
 
 Preprocessing
 
-&#x20;       |
+|
 
-&#x20;       v
+v
 
 Logistic Regression
 
-&#x20;       |
+|
 
-&#x20;       v
+v
 
 churn\_model.joblib
 
 
 
+\----------------------------
+
 
 
 INFERENCE
 
-
-
 Client
 
-&#x20; |
+|
 
-&#x20; | POST /predict
+| POST /predict
 
-&#x20; v
+v
 
 FastAPI
 
-&#x20; |
+|
 
-&#x20; v
+v
 
 Pydantic Validation
 
-&#x20; |
+|
 
-&#x20; v
+v
 
 Saved ML Pipeline
 
-&#x20; |
+|
 
-&#x20; v
+v
 
 Prediction + Churn Probability
 
-&#x20; |
-
-&#x20; v
-
-Client
 
 
+\----------------------------
 
 
 
 OPERATIONS
 
-
-
 Docker Container
 
-&#x20; |
+|
 
-&#x20; +-- FastAPI Service
+\+ FastAPI Service
 
-&#x20; +-- Application Logging
+\+ Application Logging
 
-&#x20; +-- Runtime Metrics
+\+ Runtime Metrics
 
-&#x20; +-- Health Check
+\+ Health Check
 
 ```
-
-
 
 
 
