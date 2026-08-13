@@ -14,95 +14,9 @@ The project demonstrates the full workflow from raw customer data and model trai
 
 
 
-\## Architecture
+!\[Production ML API Architecture](docs/architecture.png)
 
 
-
-\## Architecture
-
-
-
-```text
-
-TRAINING
-
-Telco Customer Dataset
-
-|
-
-v
-
-Preprocessing
-
-|
-
-v
-
-Logistic Regression
-
-|
-
-v
-
-churn\_model.joblib
-
-
-
-\----------------------------
-
-
-
-INFERENCE
-
-Client
-
-|
-
-| POST /predict
-
-v
-
-FastAPI
-
-|
-
-v
-
-Pydantic Validation
-
-|
-
-v
-
-Saved ML Pipeline
-
-|
-
-v
-
-Prediction + Churn Probability
-
-
-
-\----------------------------
-
-
-
-OPERATIONS
-
-Docker Container
-
-|
-
-\+ FastAPI Service
-
-\+ Application Logging
-
-\+ Runtime Metrics
-
-\+ Health Check
-
-```
 
 
 
