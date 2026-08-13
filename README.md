@@ -20,43 +20,69 @@ flowchart TD
 
 
 
-&#x20;   A\["Telco Customer Data"] --> B\["Training Pipeline"]
+&#x20;   data\["Telco Customer Data"]
 
-&#x20;   B --> C\["Preprocessing"]
+&#x20;   training\["Training Pipeline"]
 
-&#x20;   C --> D\["Logistic Regression"]
+&#x20;   preprocessing\["Preprocessing"]
 
-&#x20;   D --> E\["Saved Model: churn\_model.joblib"]
+&#x20;   classifier\["Logistic Regression"]
 
-
-
-&#x20;   E --> F\["FastAPI Service"]
+&#x20;   artifact\["churn\_model.joblib"]
 
 
 
-&#x20;   G\["Client"] -->|"POST /predict"| F
+&#x20;   client\["Client"]
 
-&#x20;   F --> H\["Pydantic Validation"]
+&#x20;   api\["FastAPI REST API"]
 
-&#x20;   H --> I\["Saved ML Pipeline"]
+&#x20;   validation\["Pydantic Validation"]
 
-&#x20;   I --> J\["Prediction + Churn Probability"]
+&#x20;   inference\["Saved ML Pipeline"]
 
-&#x20;   J --> G
-
-
-
-&#x20;   F --> K\["Application Logging"]
-
-&#x20;   F --> L\["Runtime Metrics"]
+&#x20;   response\["Prediction + Churn Probability"]
 
 
 
-&#x20;   M\["Docker Container"] --> F
+&#x20;   logging\["Application Logging"]
+
+&#x20;   metrics\["Runtime Metrics"]
+
+&#x20;   docker\["Docker Container"]
+
+
+
+&#x20;   data --> training
+
+&#x20;   training --> preprocessing
+
+&#x20;   preprocessing --> classifier
+
+&#x20;   classifier --> artifact
+
+
+
+&#x20;   client -->|"POST /predict"| api
+
+&#x20;   api --> validation
+
+&#x20;   validation --> inference
+
+&#x20;   artifact --> inference
+
+&#x20;   inference --> response
+
+
+
+&#x20;   api --> logging
+
+&#x20;   api --> metrics
+
+
+
+&#x20;   docker -. "runs" .-> api
 
 ```
-
-
 
 \## Machine Learning Pipeline
 
