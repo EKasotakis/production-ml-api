@@ -16,39 +16,45 @@ The project demonstrates the full workflow from raw customer data and model trai
 
 ```mermaid
 
-flowchart LR
-
-&#x20;   A\[Telco Customer Data] --> B\[Training Pipeline]
-
-&#x20;   B --> C\[Preprocessing]
-
-&#x20;   C --> D\[Logistic Regression]
-
-&#x20;   D --> E\[churn\_model.joblib]
+flowchart TD
 
 
 
-&#x20;   F\[Client] -->|POST /predict| G\[FastAPI]
+&#x20;   A\["Telco Customer Data"] --> B\["Training Pipeline"]
 
-&#x20;   G --> H\[Pydantic Validation]
+&#x20;   B --> C\["Preprocessing"]
 
-&#x20;   H --> I\[Saved ML Pipeline]
+&#x20;   C --> D\["Logistic Regression"]
 
-&#x20;   E --> I
-
-&#x20;   I --> J\[Prediction + Probability]
-
-&#x20;   J --> F
+&#x20;   D --> E\["Saved Model: churn\_model.joblib"]
 
 
 
-&#x20;   G --> K\[Logging]
+&#x20;   E --> F\["FastAPI Service"]
 
-&#x20;   G --> L\[Runtime Metrics]
+
+
+&#x20;   G\["Client"] -->|"POST /predict"| F
+
+&#x20;   F --> H\["Pydantic Validation"]
+
+&#x20;   H --> I\["Saved ML Pipeline"]
+
+&#x20;   I --> J\["Prediction + Churn Probability"]
+
+&#x20;   J --> G
+
+
+
+&#x20;   F --> K\["Application Logging"]
+
+&#x20;   F --> L\["Runtime Metrics"]
+
+
+
+&#x20;   M\["Docker Container"] --> F
 
 ```
-
-
 
 
 
