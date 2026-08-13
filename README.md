@@ -18,147 +18,101 @@ The project demonstrates the full workflow from raw customer data and model trai
 
 
 
+\## Architecture
+
+
+
 ```text
 
-&#x20;                        TRAINING
+TRAINING
 
 
 
-&#x20;             +------------------------+
+Telco Customer Dataset
 
-&#x20;             | Telco Customer Dataset |
+&#x20;       |
 
-&#x20;             +-----------+------------+
+&#x20;       v
 
-&#x20;                         |
+Preprocessing
 
-&#x20;                         v
+&#x20;       |
 
-&#x20;             +------------------------+
+&#x20;       v
 
-&#x20;             |   Training Pipeline    |
+Logistic Regression
 
-&#x20;             +-----------+------------+
+&#x20;       |
 
-&#x20;                         |
+&#x20;       v
 
-&#x20;                         v
+churn\_model.joblib
 
-&#x20;             +------------------------+
 
-&#x20;             |     Preprocessing      |
 
-&#x20;             | Impute / Scale / Encode|
 
-&#x20;             +-----------+------------+
 
-&#x20;                         |
+INFERENCE
 
-&#x20;                         v
 
-&#x20;             +------------------------+
 
-&#x20;             |  Logistic Regression   |
+Client
 
-&#x20;             +-----------+------------+
+&#x20; |
 
-&#x20;                         |
+&#x20; | POST /predict
 
-&#x20;                         v
+&#x20; v
 
-&#x20;             +------------------------+
+FastAPI
 
-&#x20;             | churn\_model.joblib     |
+&#x20; |
 
-&#x20;             +-----------+------------+
+&#x20; v
 
-&#x20;                         |
+Pydantic Validation
 
-&#x20;                         |
+&#x20; |
 
-&#x20;      -------------------+-------------------
+&#x20; v
 
-&#x20;                         |
+Saved ML Pipeline
 
-&#x20;                         v
+&#x20; |
 
-&#x20;                        API
+&#x20; v
 
+Prediction + Churn Probability
 
+&#x20; |
 
-+----------+      +------------------------+
+&#x20; v
 
-|  Client  | ---> |      FastAPI API       |
+Client
 
-+----------+ POST +-----------+------------+
 
-&#x20;            /predict         |
 
-&#x20;                             v
 
-&#x20;                 +------------------------+
 
-&#x20;                 |  Pydantic Validation   |
+OPERATIONS
 
-&#x20;                 +-----------+------------+
 
-&#x20;                             |
 
-&#x20;                             v
+Docker Container
 
-&#x20;                 +------------------------+
+&#x20; |
 
-&#x20;                 | Saved ML Pipeline      |
+&#x20; +-- FastAPI Service
 
-&#x20;                 | + Trained Model        |
+&#x20; +-- Application Logging
 
-&#x20;                 +-----------+------------+
+&#x20; +-- Runtime Metrics
 
-&#x20;                             |
-
-&#x20;                             v
-
-&#x20;                 +------------------------+
-
-&#x20;                 | Churn Prediction       |
-
-&#x20;                 | + Probability          |
-
-&#x20;                 +-----------+------------+
-
-&#x20;                             |
-
-&#x20;                             v
-
-&#x20;                        +----------+
-
-&#x20;                        |  Client  |
-
-&#x20;                        +----------+
-
-
-
-&#x20;                    OPERATIONS
-
-
-
-&#x20;             +------------------------+
-
-&#x20;             |   Docker Container     |
-
-&#x20;             |   runs FastAPI API     |
-
-&#x20;             +------------------------+
-
-
-
-&#x20;             FastAPI ---> Logging
-
-&#x20;                     ---> Runtime Metrics
-
-&#x20;                     ---> Health Check
+&#x20; +-- Health Check
 
 ```
+
+
 
 
 
