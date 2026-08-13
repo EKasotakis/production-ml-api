@@ -14,75 +14,153 @@ The project demonstrates the full workflow from raw customer data and model trai
 
 
 
-```mermaid
-
-flowchart TD
+\## Architecture
 
 
 
-&#x20;   data\["Telco Customer Data"]
+```text
 
-&#x20;   training\["Training Pipeline"]
-
-&#x20;   preprocessing\["Preprocessing"]
-
-&#x20;   classifier\["Logistic Regression"]
-
-&#x20;   artifact\["churn\_model.joblib"]
+&#x20;                        TRAINING
 
 
 
-&#x20;   client\["Client"]
+&#x20;             +------------------------+
 
-&#x20;   api\["FastAPI REST API"]
+&#x20;             | Telco Customer Dataset |
 
-&#x20;   validation\["Pydantic Validation"]
+&#x20;             +-----------+------------+
 
-&#x20;   inference\["Saved ML Pipeline"]
+&#x20;                         |
 
-&#x20;   response\["Prediction + Churn Probability"]
+&#x20;                         v
+
+&#x20;             +------------------------+
+
+&#x20;             |   Training Pipeline    |
+
+&#x20;             +-----------+------------+
+
+&#x20;                         |
+
+&#x20;                         v
+
+&#x20;             +------------------------+
+
+&#x20;             |     Preprocessing      |
+
+&#x20;             | Impute / Scale / Encode|
+
+&#x20;             +-----------+------------+
+
+&#x20;                         |
+
+&#x20;                         v
+
+&#x20;             +------------------------+
+
+&#x20;             |  Logistic Regression   |
+
+&#x20;             +-----------+------------+
+
+&#x20;                         |
+
+&#x20;                         v
+
+&#x20;             +------------------------+
+
+&#x20;             | churn\_model.joblib     |
+
+&#x20;             +-----------+------------+
+
+&#x20;                         |
+
+&#x20;                         |
+
+&#x20;      -------------------+-------------------
+
+&#x20;                         |
+
+&#x20;                         v
+
+&#x20;                        API
 
 
 
-&#x20;   logging\["Application Logging"]
++----------+      +------------------------+
 
-&#x20;   metrics\["Runtime Metrics"]
+|  Client  | ---> |      FastAPI API       |
 
-&#x20;   docker\["Docker Container"]
++----------+ POST +-----------+------------+
+
+&#x20;            /predict         |
+
+&#x20;                             v
+
+&#x20;                 +------------------------+
+
+&#x20;                 |  Pydantic Validation   |
+
+&#x20;                 +-----------+------------+
+
+&#x20;                             |
+
+&#x20;                             v
+
+&#x20;                 +------------------------+
+
+&#x20;                 | Saved ML Pipeline      |
+
+&#x20;                 | + Trained Model        |
+
+&#x20;                 +-----------+------------+
+
+&#x20;                             |
+
+&#x20;                             v
+
+&#x20;                 +------------------------+
+
+&#x20;                 | Churn Prediction       |
+
+&#x20;                 | + Probability          |
+
+&#x20;                 +-----------+------------+
+
+&#x20;                             |
+
+&#x20;                             v
+
+&#x20;                        +----------+
+
+&#x20;                        |  Client  |
+
+&#x20;                        +----------+
 
 
 
-&#x20;   data --> training
-
-&#x20;   training --> preprocessing
-
-&#x20;   preprocessing --> classifier
-
-&#x20;   classifier --> artifact
+&#x20;                    OPERATIONS
 
 
 
-&#x20;   client -->|"POST /predict"| api
+&#x20;             +------------------------+
 
-&#x20;   api --> validation
+&#x20;             |   Docker Container     |
 
-&#x20;   validation --> inference
+&#x20;             |   runs FastAPI API     |
 
-&#x20;   artifact --> inference
-
-&#x20;   inference --> response
+&#x20;             +------------------------+
 
 
 
-&#x20;   api --> logging
+&#x20;             FastAPI ---> Logging
 
-&#x20;   api --> metrics
+&#x20;                     ---> Runtime Metrics
 
-
-
-&#x20;   docker -. "runs" .-> api
+&#x20;                     ---> Health Check
 
 ```
+
+
 
 \## Machine Learning Pipeline
 
